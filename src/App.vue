@@ -29,6 +29,8 @@ export default {
       ]
     }
   },
+
+  //provide data from app.vue
   provide() {
     return {
       teams: this.teams,
