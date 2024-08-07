@@ -9,6 +9,7 @@
         :role="member.role"
       ></user-item>
     </ul>
+    <router-link to="/teams/t2">Go to Team 2</router-link>
   </section>
 </template>
 
@@ -26,22 +27,32 @@ export default {
       members: []
     }
   },
+  methods: {
+    loadTeamMembers(route) {
+      // this.$route.path // /teams/t1
+      // console.log(this.$route)
+      const teamId = route.params.teamId //teamId is route params here store the route parameter id
+      // console.log(teamId)
+
+      const selectedTeam = this.teams.find((team) => team.id === teamId)
+      const members = selectedTeam.members
+      const selectedMembers = []
+      for (const member of members) {
+        const selectedUser = this.users.find((user) => user.id === member)
+        selectedMembers.push(selectedUser)
+      }
+      this.members = selectedMembers
+      this.teamName = selectedTeam.name
+    }
+  },
   //created lifecycle hook
   created() {
-    // this.$route.path // /teams/t1
-    // console.log(this.$route)
-    const teamId = this.$route.params.teamId //teamId is route params here store the route parameter id
-    // console.log(teamId)
-
-    const selectedTeam = this.teams.find((team) => team.id === teamId)
-    const members = selectedTeam.members
-    const selectedMembers = []
-    for (const member of members) {
-      const selectedUser = this.users.find((user) => user.id === member)
-      selectedMembers.push(selectedUser)
+    this.loadTeamMembers(this.$route)
+  },
+  watch: {
+    $route(newRoute) {
+      this.loadTeamMembers(newRoute)
     }
-    this.members = selectedMembers
-    this.teamName = selectedTeam.name
   }
 }
 </script>
