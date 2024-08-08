@@ -18,6 +18,7 @@ import UserItem from '../users/UserItem.vue'
 
 export default {
   inject: ['users', 'teams'],
+  props: ['teamId'],
   components: {
     UserItem
   },
@@ -28,10 +29,10 @@ export default {
     }
   },
   methods: {
-    loadTeamMembers(route) {
+    loadTeamMembers(teamId) {
       // this.$route.path // /teams/t1
       // console.log(this.$route)
-      const teamId = route.params.teamId //teamId is route params here store the route parameter id
+      // const teamId = route.params.teamId //teamId is route params here store the route parameter id
       // console.log(teamId)
 
       const selectedTeam = this.teams.find((team) => team.id === teamId)
@@ -47,11 +48,11 @@ export default {
   },
   //created lifecycle hook
   created() {
-    this.loadTeamMembers(this.$route)
+    this.loadTeamMembers(this.teamId)
   },
   watch: {
-    $route(newRoute) {
-      this.loadTeamMembers(newRoute)
+    teamId(newId) {
+      this.loadTeamMembers(newId)
     }
   }
 }
