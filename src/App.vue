@@ -4,6 +4,10 @@
     <!-- <component :is="activePage"></component> -->
     <router-view></router-view>
   </main>
+  <footer>
+    <!--For multiple routers with named -->
+    <router-view name="footer"></router-view>
+  </footer>
 </template>
 
 <script>
